@@ -28,4 +28,5 @@ TO DO:
     - Edmonds-Karp
     - Dinic
     - Goldberg-Tarjan
+* Add a CLI
 * Add a GUI
