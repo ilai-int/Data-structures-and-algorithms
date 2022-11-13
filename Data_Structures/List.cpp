@@ -1,5 +1,5 @@
 #include "List.h"
-#include <cstdio>
+#include <iostream>
 #include <exception>
 
 /*
@@ -31,7 +31,7 @@ Sets size to 0.
 */
 List::List()
 {
-    sentinel = new node{0, 0,nullptr, nullptr};
+    sentinel = new list_node{0, 0,nullptr, nullptr};
     sentinel->next = sentinel;
     sentinel->prev = sentinel;
     size = 0;
@@ -57,7 +57,7 @@ value - the value of the node.
 ==================================
 */
 void List::insert_at_start(const char * name, const char * value){
-    node * new_node = new node{name, value, sentinel->next, sentinel};
+    list_node * new_node = new list_node{name, value, sentinel->next, sentinel};
     sentinel->next = new_node;
     new_node->next->prev = new_node;
     size++;
@@ -75,7 +75,7 @@ value - the value of the node.
 ==================================
 */
 void List::insert_at_end(const char * name, const char * value){
-    node * new_node = new node{name, value, sentinel, sentinel->prev};
+    list_node * new_node = new list_node{name, value, sentinel, sentinel->prev};
     sentinel->prev->next =  new_node;
     sentinel->prev =  new_node;
     size++;
@@ -93,8 +93,8 @@ if there is a node, return it.
 if no such node exists, throw an exeption.
 ==================================
 */
-node * List::find(const char * name){
-    node * search_node = sentinel->next;
+list_node * List::find(const char * name){
+    list_node * search_node = sentinel->next;
     // Go through the list and find a node with a matching name
     // This assumes all name are unique
     while(search_node != sentinel){
@@ -122,9 +122,9 @@ If the previous node is not in the list, the function will output a notification
 */
 void List::insert_after_node(const char * prev_node_name, const char * inserted_name, const char * value){
     try{
-        node * prev_node = find(prev_node_name);
-        node * next_node = prev_node->next;
-        node * new_node = new node{inserted_name, value, next_node, prev_node};
+        list_node * prev_node = find(prev_node_name);
+        list_node * next_node = prev_node->next;
+        list_node * new_node = new list_node{inserted_name, value, next_node, prev_node};
         prev_node->next->prev = new_node;
         prev_node->next = new_node;
         size++;
@@ -146,7 +146,7 @@ If the previous node is not in the list, the function will output a notification
 */
 void List::delete_node(const char * name){
     try{
-        node * delete_node = find(name);
+        list_node * delete_node = find(name);
         delete_node->prev->next = delete_node->next;
         delete_node->next->prev = delete_node->prev;
         delete delete_node;
@@ -164,7 +164,7 @@ returns the first node in the list.
 If the list is empty, throw an expetion;
 =================================
 */
-node * List::get_head(){
+list_node * List::get_head(){
     if (size==0){
         throw EmptyListException();
     }
@@ -180,9 +180,9 @@ suffix - the list that will be added.
 */
 void List::concat(List suffix){
     try{
-        node * suffix_head = suffix.get_head();
-        node * suffix_sentinel = suffix_head->prev;
-        node * suffix_tail = suffix_sentinel->prev;
+        list_node * suffix_head = suffix.get_head();
+        list_node * suffix_sentinel = suffix_head->prev;
+        list_node * suffix_tail = suffix_sentinel->prev;
         // attach head to the end of the list
         sentinel->prev->next = suffix_head;
         // attach tail to the sentinel
@@ -204,8 +204,8 @@ goes through each node in the list and destroys it.
 */
 List::~List()
 {
-    node * this_node = sentinel;
-    node * next_node = this_node->next;
+    list_node * this_node = sentinel;
+    list_node * next_node = this_node->next;
     // While there are more nodes in the list
     while(next_node != sentinel){
         this_node = next_node;
