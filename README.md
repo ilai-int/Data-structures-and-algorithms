@@ -3,7 +3,7 @@
 
 TO DO:
 * Design imporant data sturcturs:
-    - Circular lists
+    - <s>Circular lists</s>
     - Binary search trees
     - B-trees
     - Hash table
@@ -30,3 +30,4 @@ TO DO:
     - Goldberg-Tarjan
 * Add a CLI
 * Add a GUI
+* Improve linked list's security
