@@ -4,8 +4,8 @@
 typedef struct list_node{
     const char * name;
     const char * value;
-    node * next;
-    node * prev;
+    list_node * next;
+    list_node * prev;
 } list_node;
 
 class List
