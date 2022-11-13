@@ -1,5 +1,5 @@
 #include "List.h"
-#include <iostream>
+#include <cstdio>
 #include <exception>
 
 /*
@@ -31,7 +31,9 @@ Sets size to 0.
 */
 List::List()
 {
-    sentinel = new node{0, 0 ,sentinel, sentinel};
+    sentinel = new node{0, 0,nullptr, nullptr};
+    sentinel->next = sentinel;
+    sentinel->prev = sentinel;
     size = 0;
 }
 /*
@@ -73,9 +75,9 @@ value - the value of the node.
 ==================================
 */
 void List::insert_at_end(const char * name, const char * value){
-    node new_node = {name, value, sentinel, sentinel->prev};
-    sentinel->prev->next = &new_node;
-    sentinel->prev = &new_node;
+    node * new_node = new node{name, value, sentinel, sentinel->prev};
+    sentinel->prev->next =  new_node;
+    sentinel->prev =  new_node;
     size++;
 }
 
@@ -121,7 +123,8 @@ If the previous node is not in the list, the function will output a notification
 void List::insert_after_node(const char * prev_node_name, const char * inserted_name, const char * value){
     try{
         node * prev_node = find(prev_node_name);
-        node * new_node = new node{inserted_name, value, prev_node->next, prev_node};
+        node * next_node = prev_node->next;
+        node * new_node = new node{inserted_name, value, next_node, prev_node};
         prev_node->next->prev = new_node;
         prev_node->next = new_node;
         size++;
@@ -208,7 +211,6 @@ List::~List()
         this_node = next_node;
         next_node = this_node->next;
         delete this_node;
-        std::cout << "Deleting node " << std::endl;
     }
     delete sentinel;
 }
