@@ -1,6 +1,6 @@
 #include "List.h"
 #include <iostream>
-#include <execution>
+#include <exception>
 
 /*
 Exception in case the list is empty
@@ -54,7 +54,7 @@ value - the value of the node.
 (Note: this requires that the name of each node in a list is unique)
 ==================================
 */
-void List::insert_at_start(char * name, char * value){
+void List::insert_at_start(const char * name, const char * value){
     node * new_node = new node{name, value, sentinel->next, sentinel};
     sentinel->next = new_node;
     new_node->next->prev = new_node;
@@ -72,10 +72,11 @@ value - the value of the node.
 (Note: this requires that the name of each node in a list is unique)
 ==================================
 */
-void List::insert_at_end(char * name, char * value){
+void List::insert_at_end(const char * name, const char * value){
     node new_node = {name, value, sentinel, sentinel->prev};
     sentinel->prev->next = &new_node;
     sentinel->prev = &new_node;
+    size++;
 }
 
 /*
@@ -90,14 +91,15 @@ if there is a node, return it.
 if no such node exists, throw an exeption.
 ==================================
 */
-node * List::find(char * name){
+node * List::find(const char * name){
     node * search_node = sentinel->next;
     // Go through the list and find a node with a matching name
     // This assumes all name are unique
     while(search_node != sentinel){
-        if (!strcmp(search_node->name, name)){
+        if (search_node->name == name){
             return search_node;
         }
+        search_node = search_node->next;
     }
     throw NodeNotFoundException();
 
@@ -116,12 +118,12 @@ value - the value of the new node
 If the previous node is not in the list, the function will output a notification.
 ==================================
 */
-void List::insert_after_node(char * prev_node_name, char * inserted_name, char * value){
+void List::insert_after_node(const char * prev_node_name, const char * inserted_name, const char * value){
     try{
         node * prev_node = find(prev_node_name);
-        node new_node = {inserted_name, value, prev_node->next, prev_node};
-        prev_node->next->prev = &new_node;
-        prev_node->next = &new_node;
+        node * new_node = new node{inserted_name, value, prev_node->next, prev_node};
+        prev_node->next->prev = new_node;
+        prev_node->next = new_node;
         size++;
     }
     catch(std::exception& e){
@@ -139,7 +141,7 @@ name - the name of the node to be deleted
 If the previous node is not in the list, the function will output a notification.
 ==================================
 */
-void List::delete_node(char * name){
+void List::delete_node(const char * name){
     try{
         node * delete_node = find(name);
         delete_node->prev->next = delete_node->next;
@@ -206,6 +208,7 @@ List::~List()
         this_node = next_node;
         next_node = this_node->next;
         delete this_node;
+        std::cout << "Deleting node " << std::endl;
     }
     delete sentinel;
 }
