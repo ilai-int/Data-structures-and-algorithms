@@ -2,7 +2,7 @@
  An attempt to reacrate the algorithms I learned in my university.
 
 TO DO:
-* Design imporant data sturcturs:
+* Design imporant data sturctures:
     - <s>Circular lists</s>
     - <s>Binary search trees</s>
     - B-trees
