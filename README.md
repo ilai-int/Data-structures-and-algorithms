@@ -4,7 +4,7 @@
 TO DO:
 * Design imporant data sturcturs:
     - <s>Circular lists</s>
-    - Binary search trees
+    - <s>Binary search trees</s>
     - B-trees
     - Hash table
     - Binary heap
