@@ -12,7 +12,7 @@ TO DO:
     - Fibonnaci heap
     - graph
 * Implement algorithms:
-    - Sorting algoryhms
+    - Sorting algorithms
     - BFS
     - DFS
     - Topological sorting
