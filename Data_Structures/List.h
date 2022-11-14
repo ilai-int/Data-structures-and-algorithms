@@ -1,12 +1,7 @@
 #ifndef _LIST_
 #define _LIST_
 
-typedef struct list_node{
-    const char * name;
-    const char * value;
-    list_node * next;
-    list_node * prev;
-} list_node;
+#include "Nodes.h"
 
 class List
 {

@@ -1,6 +1,6 @@
 #include "List.h"
 #include <iostream>
-#include <exception>
+
 
 /*
 Exception in case the list is empty
@@ -12,16 +12,7 @@ class EmptyListException : public std::exception{
     }
 
 };
-/*
-Search miss exception
-*/
-class NodeNotFoundException : public std::exception{
-    public:
-    const char * what(){
-        return "Error: can't find node";
-    }
 
-};
 /*
 ==================================
 List consturctor:

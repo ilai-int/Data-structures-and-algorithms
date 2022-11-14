@@ -1,15 +1,6 @@
 #ifndef _BST_
 #define _BST_
-#include <exception>
-typedef struct tree_node{
-    const char * name;
-    const char * value;
-    int height;
-    int balance;
-    tree_node * parent;
-    tree_node * l_child;
-    tree_node * r_child;
-}tree_node;
+#include "Nodes.h"
 
 class BST
 {
@@ -34,15 +25,4 @@ public:
 };
 
 
-
-/*
-Search miss exception
-*/
-class NodeNotFoundException : public std::exception{
-    public:
-    const char * what(){
-        return "Error: can't find node";
-    }
-
-};
 #endif
