@@ -164,7 +164,7 @@ list_node * List::get_head(){
 /*
 =================================
 concat:
-add a list to the end of this list
+add a list to the end of this list, and make to suffix point to it.
 
 suffix - the list that will be added.
 =================================
@@ -182,6 +182,9 @@ void List::concat(List suffix){
         suffix_sentinel->next = suffix_sentinel;
         suffix_sentinel->prev = suffix_sentinel;
         size += suffix.get_size();
+        suffix = *this;
+        delete(suffix_sentinel);
+        
     }
     catch(std::exception& e){
         std::cout << e.what() << std::endl;
